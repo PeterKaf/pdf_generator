@@ -3,12 +3,19 @@ import glob
 from fpdf import FPDF
 from pathlib import Path
 
+# Path to the directories containing the Excel and PDF files
 invoice_filepaths = "invoices/"
 pdf_filepaths = "output/"
 
 
 # Function definitions for generating PDF content
 def get_col_titles(pdf, df):
+    """
+    Get the column titles from the dataframe and write them to the PDF
+    :param pdf: FPDF object
+    :param df: Pandas dataframe
+    :return: None
+    """
     columns = list(df.columns)
     pdf.set_font(family="Times", style="B", size=10)
     pdf.cell(w=50, h=8, txt=columns[0], border=1)
@@ -18,6 +25,12 @@ def get_col_titles(pdf, df):
 
 
 def get_table_contents(pdf, row):
+    """
+    Get the table contents from the dataframe and write them to the PDF
+    :param pdf: FPDF object
+    :param row: Dataframe row
+    :return: None
+    """
     pdf.set_font(family="Times", size=10)
     pdf.cell(w=50, h=8, txt=str(row['Product ID']), border=1)
     pdf.cell(w=30, h=8, txt=str(row['Quantity']), border=1)
@@ -26,6 +39,13 @@ def get_table_contents(pdf, row):
 
 
 def get_total_price(pdf, df, index):
+    """
+    Get the total price from the dataframe and write it to the PDF
+    :param pdf: FPDF object
+    :param df: Pandas dataframe
+    :param index: Index of the last row in the dataframe
+    :return: None
+    """
     pdf.set_font(family="Times", style="B", size=10)
     pdf.cell(w=50, h=8, txt="", border=1)
     pdf.cell(w=30, h=8, txt="", border=1)
@@ -34,6 +54,11 @@ def get_total_price(pdf, df, index):
 
 
 def xlsx_transform(filepath):
+    """
+    Transform the xlsx file to a PDF file
+    :param filepath: path to the xlsx file
+    :return: None
+    """
     df = pd.read_excel(filepath)
 
     pdf = FPDF(orientation="P", unit="mm", format="A4")
@@ -63,6 +88,11 @@ def xlsx_transform(filepath):
 
 
 def convert_to_pdf(directory):
+    """
+    Convert all Excel files in the directory to PDF files via the xlsx_transform function
+    :param directory: directory containing the Excel files
+    :return: None
+    """
     # Get all Excel files in the directory using glob
     excel_files = glob.glob(f"{directory}/*.xlsx")
 
