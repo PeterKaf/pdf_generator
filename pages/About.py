@@ -11,7 +11,7 @@ image = Image.open("Invoice_template.png")
 
 st.write(message)
 st.header("How to use the app")
-st.write("1. Name invoice files so that invoice number is prefaced with '-' e.q: 'Invoice-<invoice number>.xlsx'.")
+st.write("1. Name invoice files so that invoice number is prefaced with '-' e.q. 'Invoice-<invoice number>.xlsx'.")
 st.write("2. Prepare your invoice files in XLSX format, according to the template provided.")
 st.image(image)
 st.write("The first row of the XLSX file should contain the exact column titles."
