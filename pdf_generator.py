@@ -2,6 +2,7 @@ import pandas as pd
 import glob
 from fpdf import FPDF
 from pathlib import Path
+import os
 
 # Path to the directories containing the Excel and PDF files
 invoice_filepaths = "invoices/"
@@ -84,6 +85,10 @@ def xlsx_transform(filepath):
         elif index == len(df) - 1:
             get_total_price(pdf, df, index)
 
+    # Create the directory if it doesn't exist
+    if not os.path.exists(pdf_filepaths):
+        os.makedirs(pdf_filepaths)
+
     pdf.output(f'{pdf_filepaths}{filename}.pdf')
 
 
@@ -98,3 +103,17 @@ def convert_to_pdf(directory):
 
     for file in excel_files:
         xlsx_transform(file)
+
+
+def cleanup_directory(directory):
+    """
+    Delete all files in the specified directory
+    :param directory: cleanup directory
+    :return: None
+    """
+    files = glob.glob(f"{directory}/*")
+    for file in files:
+        try:
+            os.remove(file)
+        except OSError:
+            print(f"Error while deleting file {file}")

@@ -1,5 +1,5 @@
 import streamlit as st
-from pdf_generator import convert_to_pdf
+from pdf_generator import convert_to_pdf, cleanup_directory
 import zipfile
 import glob
 from pathlib import Path
@@ -42,6 +42,9 @@ def main():
             # Remove the "output.zip" file after it has been downloaded
             if os.path.isfile("output.zip"):
                 os.remove("output.zip")
+
+            # Remove all files in the 'output' directory
+            cleanup_directory("output/")
 
 
 if __name__ == "__main__":
